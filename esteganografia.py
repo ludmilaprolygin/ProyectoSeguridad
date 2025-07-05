@@ -126,10 +126,18 @@ if __name__ == "__main__":
         elif args.file:
             with open(args.file, "rb") as f:
                 secret_data = f.read()
+
         input_image = args.encode
-        path, file = os.path.split(input_image)
-        filename, ext = file.split(".")
-        output_image = os.path.join(path, f"{filename}_encoded.{ext}")
+
+        filename = os.path.basename(input_image)
+        name, ext = os.path.splitext(filename)
+
+        base_dir = os.path.dirname(__file__)
+
+        output_dir = os.path.join(base_dir, "resources", "encoded_images")
+        os.makedirs(output_dir, exist_ok=True)
+
+        output_image = os.path.join(output_dir, f"{name}_encoded{ext}")
         encoded_image = encode(image_name=input_image, secret_data=secret_data, n_bits=args.n_bits)
         cv2.imwrite(output_image, encoded_image)
         print("[+] Saved encoded image.")

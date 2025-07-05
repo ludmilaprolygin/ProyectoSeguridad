@@ -33,16 +33,11 @@ def encode_text(image_name, secret_data):
 
     binary_secret_data = to_bin(secret_data)
     data_len = len(binary_secret_data)
-
-    print(binary_secret_data)
     
     for row in image:
         for pixel in row:
             # Convertir RGB a binario
             r, g, b = to_bin(pixel)
-
-            if data_index == 0:
-                print(r, g, b)
 
             if data_index < data_len:
                 # Modificar LSB del pixel rojo
@@ -66,15 +61,10 @@ def decode_text(image_name):
     image = cv2.imread(image_name)
 
     binary_data = ""
-    data_index = 0
 
     for row in image:
         for pixel in row:
             r, g, b = to_bin(pixel)
-
-            if data_index == 0:
-                print(r, g, b)
-            data_index += 1
 
             binary_data += r[-1]
             binary_data += g[-1]
@@ -93,8 +83,8 @@ def decode_text(image_name):
 
 
 if __name__ == "__main__":
-    input_image = "resources/DCIC.png"
-    output_image = "resources/DCIC_encoded.png"
+    input_image = "resources/original_images/DCIC.png"
+    output_image = "resources/encoded_images/DCIC_encoded.png"
     secret_data = "Proyecto de esteganografia de Seguridad en Sistemas."
 
     encoded_image = encode_text(image_name=input_image, secret_data=secret_data)
