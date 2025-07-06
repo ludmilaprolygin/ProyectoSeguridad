@@ -24,9 +24,10 @@ def encode(image_name, secret_data, n_bits=2):
 
     #Cantidad maxima de bytes que se pueden codificar
         #3 canales RGB, 8 bits por canal
-    n_bytes = image.shape[0] * image.shape[1] * 3 // 8 
+    n_bytes = image.shape[0] * image.shape[1] * 3 * n_bits // 8 
     
     print("[*] Maximum bytes to encode:", n_bytes)
+    print("[*] Encoding data length:", len(secret_data))
     if len(secret_data) > n_bytes:
         raise ValueError("[!] Insufficient bytes, need bigger image or less data.")
     
@@ -49,21 +50,21 @@ def encode(image_name, secret_data, n_bits=2):
                 if data_index < data_len:
                     if bit == 1:
                         # Modificar LSB del pixel rojo
-                        pixel[0] = int(r[:-1] + binary_secret_data[data_index], 2)
+                        pixel[0] = int(r[:-bit] + binary_secret_data[data_index], 2)
                     elif bit > 1:
                         pixel[0] = int(r[:-bit] + binary_secret_data[data_index] + r[-bit+1:], 2)
                     data_index += 1
                 if data_index < data_len:
                     if bit == 1:
                         # Modificar LSB del pixel verde
-                        pixel[1] = int(g[:-1] + binary_secret_data[data_index], 2)
+                        pixel[1] = int(g[:-bit] + binary_secret_data[data_index], 2)
                     elif bit > 1:
                         pixel[1] = int(g[:-bit] + binary_secret_data[data_index] + g[-bit+1:], 2)
                     data_index += 1
                 if data_index < data_len:
                     if bit == 1:
                         # Modificar LSB del pixel azul
-                        pixel[2] = int(b[:-1] + binary_secret_data[data_index], 2)
+                        pixel[2] = int(b[:-bit] + binary_secret_data[data_index], 2)
                     elif bit > 1:
                         pixel[2] = int(b[:-bit] + binary_secret_data[data_index] + b[-bit+1:], 2)
                     data_index += 1
@@ -82,9 +83,9 @@ def decode(image_name, n_bits=1, in_bytes=False):
         for row in image:
             for pixel in row:
                 r, g, b = to_bin(pixel)
-                binary_data += r[-1]
-                binary_data += g[-1]
-                binary_data += b[-1]
+                binary_data += r[-bit]
+                binary_data += g[-bit]
+                binary_data += b[-bit]
 
     # Dividir la cadena binaria en bytes
     all_bytes = [ binary_data[i: i+8] for i in range(0, len(binary_data), 8) ]
