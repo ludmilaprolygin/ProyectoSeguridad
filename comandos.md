@@ -1,3 +1,8 @@
+## Python
+#### 1. python3 steg.py -d resources/encoded_images/DCIC_encoded_1.png -b 1
+#### 2. python3 steg.py -d resources/encoded_images/DCIC_encoded_2.png -f archivo.pdf -b 1
+#### 3. python3 steg.py -d resources/encoded_images/DCIC_encoded_3.png -f archivo.mp4 -b 7
+---
 ## Steghide
 #### 1. Mostrar directorio y abrir imagen para verla
 #### 2. Mostrar estado de la imagen

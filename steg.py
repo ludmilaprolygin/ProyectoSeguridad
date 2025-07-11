@@ -146,9 +146,11 @@ if __name__ == "__main__":
         print("[+] Saved encoded image.")
     if args.decode:
         input_image = args.decode
+        base_dir = os.path.dirname(__file__)
         if args.file:
+            file_path = os.path.join(base_dir, "resources", "hidden_files", "download", args.file)
             decoded_data = decode(input_image, n_bits=args.n_bits, in_bytes=True)
-            with open(args.file, "wb") as f:
+            with open(file_path, "wb") as f:
                 f.write(decoded_data)
             print(f"[+] File decoded, {args.file} is saved successfully.")
         else:
