@@ -1,3 +1,4 @@
+## Steghide
 #### 1. Mostrar directorio y abrir imagen para verla
 #### 2. Mostrar estado de la imagen
 steghide info Akira.jpg
@@ -11,3 +12,22 @@ steghide info Akira.jpg
 #### 7. Extraer archivo
 steghide extract -sf Akira.jpg
 #### 8. Mostrar contenido del archivo
+---
+## Herramientas de deteccion
+### Binwalk
+#### 1. Analisis de la imagen
+binwalk Akira.jpg
+#### 2. Extraccion de contenido
+binwalk -e Akira.jpg
+#### 3. Append de contenido en jpg
+cat Akira_original.jpg mensaje_oculto.txt > Akira.jpg
+#### 4. Extraccion de contenido
+binwalk -e Akira.jpg
+#### 5. Append de contenido en png
+cat DCIC_original.png hidden_file.pdf > DCIC.png
+#### 6. Extraccion de contenido
+binwalk -e DCIC.png 
+
+### Strings
+#### Mostrar contenido de tipo texto
+strings Akira.jpg | tail
