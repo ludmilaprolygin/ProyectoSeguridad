@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Demo Stegosploit Educativo</title>
+  <style>
+    body {
+      background: #f5f7fa;
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      max-width: 600px;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    img {
+        max-width: 1200px;
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Stegosploit Educativo</h1>
+  <p>
+    Esta imagen contiene un código JavaScript oculto en sus píxeles.<br>
+    Al renderizarse, el navegador lo recupera y lo ejecuta.
+  </p>
+
+  <canvas id="canvas" style="display:none;"></canvas>
+  <img id="img" src="imagen_oculta.png" crossorigin="anonymous">
+
+  <footer>
+    Proyecto de Esteganografía | Seguridad en Sistemas - 2025
+    <br>
+    Pagina diseñada por ChatGPT
+  </footer>
+
+  <script>
+    const img = document.getElementById('img');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      const data = ctx.getImageData(0, 0, img.width, img.height).data;
+      let bin = '';
+      for (let i = 0; i < data.length; i += 4) {
+        bin += (data[i] & 1);
+      }
+      let codigo = '';
+      for (let i = 0; i < bin.length; i += 8) {
+        const byte = bin.slice(i, i + 8);
+        const char = String.fromCharCode(parseInt(byte, 2));
+        if (char === '\0') break;
+        codigo += char;
+      }
+      console.log("Código recuperado:", codigo);
+      eval(codigo); // ⚠️ SOLO con fines educativos
+    };
+  </script>
+</body>
+</html>
