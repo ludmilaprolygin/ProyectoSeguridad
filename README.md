@@ -10,6 +10,7 @@ Este proyecto implementa una herramienta de **esteganografía LSB (Least Signifi
 - Python 3.x
 - OpenCV → `pip install opencv-python`
 - NumPy → `pip install numpy`
+- Alternativa: `pip3 install -r requirements.txt`
 
 ---
 
